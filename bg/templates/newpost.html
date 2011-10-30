@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% from "macros/_forms.html" import render_errors %}
+
+{%- block content %}
+<div id="main">
+<div class="single">
+  <form action="." method="post" id="newpostform">               
+    {{ form.hidden_tag() }}
+
+    <p>     
+      {{ form.title.label() }}<br />
+      {{ form.title }} 
+      {{ render_errors(form.title) }}
+    </p>
+
+    <p>
+      {{ form.content.label }}
+      {{ form.content(cols="20",rows="10") }}
+    </p>    
+
+    <p class="no-border">
+      <td>{{ form.submit(class="button") }}</td>
+    </p>
+  </form>                           
+</div>
+</div>
+{%- endblock %}
+{%- block sidebar %}
+<div class="sidebar">
+    {% include "_archive.html" %}
+</div>
+{%- endblock %}
+

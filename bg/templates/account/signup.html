@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% from "macros/_forms.html" import render_errors %}
+
+{%- block content %}
+<div id="main">
+<div class="single">
+  <form action="." method="post" id="signup">               
+    {{ form.hidden_tag() }}
+
+    <p>     
+      {{ form.username.label }} <br/>
+      {{ form.username}} 
+      {{ render_errors(form.username) }}
+    </p>
+
+    <p>
+      {{ form.password.label }} <br/>
+      {{ form.password }}
+      {{ render_errors(form.password) }}
+    </p>    
+
+    <p>
+      {{ form.code.label }} <br/>
+      {{ form.code }} 
+      {{ render_errors(form.code) }}
+    </p>    
+
+    <p>
+      {{ form.email.label }} <br/>
+      {{ form.email}}
+      {{ render_errors(form.email) }}
+    </p>    
+
+    <p class="no-border">
+      <td>{{ form.submit(class="button") }}</td>
+    </p>
+  </form>                           
+</div>
+</div>
+{%- endblock %}
+
+
+

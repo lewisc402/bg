@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{%- block content %}
+<div class="single">
+    <h2 class="title">{{ post.title }}</h2>
+    <table cellspacing="0" class="post-form">
+      <tbody>
+        <tr>
+          <td><a href="/post/{{ post.id }}">{{ post.id }}</a></td>
+          <td>{{ post.title }} </td>
+          <td>{{ post.content }} </td>
+          <td>{{ post.author_id }} </td>
+          <td>{{ post.create_date}} </td>
+          <td>{{ post.update_date}} </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+<div id="comments">
+  <div class="comment-add">
+    <h3>{{ ('Add a comment') }}</h3>
+    <form id="comment-form" method="POST" action="{{ url_for('post.add_comment', post_id=post.id) }}">
+      {{ comment_form.hidden_tag() }}
+      <p>{{ comment_form.email(class="text") }} {{ comment_form.email.label }}</p>
+      <p>{{ comment_form.comment(class="text") }}</p>
+      <p>{{ comment_form.submit(class="button") }}</p>
+    </form>
+  </div>
+  <div class="comment-list">
+    <h3>{{ ('Comments') }}</h3>
+    {%- if comments %}
+    <ol>
+      {%- for comment in comments %}
+        <table cellspacing="0" class="post-form">
+        <tbody>
+          <tr>
+          <td><a href="/comment/{{ comment.id }}">{{ comment.id }}</a></td>
+          <td>{{ comment.email}} </td>
+          <td>{{ comment.comment}} </td>
+          <td>{{ comment.create_date}} </td>
+          <td>{{ comment.update_date}} </td>
+          </tr>
+        </tbody>
+        </table>
+      {%- endfor %}
+    </ol>            
+    {%- else %}
+    <p>{{ _('No comments have been posted yet.') }}</p>
+    {%- endif %}
+  </div>
+</div>
+
+{%- endblock %}
+{%- block sidebar %}
+<div class="sidebar">
+    {% include "_archive.html" %}
+</div>
+{%- endblock %}
+
+

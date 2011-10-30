@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+<title>BG</title>
+
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="author" content="Erwin Aligam - styleshout.com" />
+<meta name="description" content="Site Description Here" />
+<meta name="keywords" content="keywords, here" />
+<meta name="robots" content="index, follow, noarchive" />
+<meta name="googlebot" content="noarchive" />
+
+<link rel="stylesheet" href="{{ url_for('.static', filename='images/VectorLover.css') }}">
+
+</head>
+
+<body>
+<!-- wrap starts here -->
+<div id="wrap">
+
+	<!--header -->
+	<div id="header">			
+				
+		<h1 id="logo-text"><a href="index.html" title="">vectorlover</a></h1>		
+		<p id="slogan">put your site slogan here...</p>		
+		
+		<div id="top-menu">
+                  <p><a href="#">rss feed</a> | <a href="#">contact</a> | 
+                  {% if g.identity.id > 0 %}
+                    <a href="{{ url_for('post.post_list', user_id = g.identity.id ) }}">{{ g.identity.name }} </a> | 
+                    <a href="{{ url_for('account.logout') }}"> Logout </a></p>
+                  {% else %}
+                    <a href="{{ url_for('account.signup') }}"> Signup </a> | 
+                    <a href="{{ url_for('account.login') }}"> Login </a> | 
+                  {% endif %}
+		</div>		
+					
+	<!--header ends-->					
+	</div>
+		
+	<!-- navigation starts-->	
+	<div  id="nav">
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li id="current"><a href="/">Blog</a></li>
+			<li><a href="">Services</a></li>
+			<li><a href="">Support</a></li>
+			<li><a href="">About</a></li>		
+		</ul>
+	<!-- navigation ends-->	
+	</div>					
+			
+	<!-- content starts -->
+	<div id="contents">
+                {%- if get_flashed_messages() -%}
+                <div id="flashed">
+                    {% for category, msg in get_flashed_messages(with_categories=true) %}
+                    <span class="flash-{{ category }}">{{ msg }}</span>
+                    {% endfor %}
+                </div>
+                {%- endif -%}
+	
+		<!-- main starts -->	
+                {%- block content %}{%- endblock %}
+		<!-- main ends -->	
+				
+		<div id="sidebar">
+                  {%- block sidebar %}
+                  {%- endblock %}
+                  <!-- sidebar ends -->		
+		</div>		
+	<!-- content ends-->	
+	</div>
+		
+	<!-- footer starts -->		
+	<div id="footer">
+	<!-- footer ends-->
+	</div>
+
+<!-- wrap ends here -->
+</div>
+
+</body>
+</html>
+

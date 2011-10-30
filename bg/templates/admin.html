@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{%- block content %}
+<div class="single">
+  <form action="index.html" method="post" id="newpostform">               
+
+    <p>     
+      {{ form.title.label(style="display:block;width:100px;") }}<br />
+      {{ form.title(size=50, class="text") }} 
+    </p>
+
+    <p>
+    <label for="email">Email Address (required)</label><br />
+    <input id="email" name="email" value="Your Email" type="text" tabindex="2" />
+    </p>
+
+    <p>
+      <th>{{ form.contents.label }}</th>
+      <td>{{ form.contents(style="width:820px;height:400px;") }} </td>
+    </p>    
+
+    <p class="no-border">
+      <td>{{ form.submit(class="button") }}</td>
+    <input class="button" type="submit" value="Submit" tabindex="5" />                    
+    </p>
+
+  </form>                           
+    <h2 class="title">{{ ('Submit a post') }}</h2>
+    <form method="POST" action=".">
+        {{ form.hidden_tag() }}
+        <table cellspacing="0" class="post-form">
+        <tbody>
+            <tr>
+                <th>{{ form.title.label(style="display:block;width:100px;") }}</th>
+                <td>{{ form.title(size=50, class="text") }} </td>
+            </tr>
+            <tr>
+                <th>{{ form.contents.label }}</th>
+                <td>{{ form.contents(style="width:820px;height:400px;") }} </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>{{ form.submit(class="button") }}</td>
+            </tr>
+        </tbody>
+        </table>
+    </form>
+</div>
+</div>
+{%- endblock %}
+{%- block sidebar %}
+<div class="sidebar">
+    {% include "_archive.html" %}
+</div>
+{%- endblock %}

@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{%- block content %}
+<div class="single">
+   <h2 class="title">{{ Admin }}</h2>
+    <table cellspacing="0" class="post-form">
+    <tbody>
+    {% for post in posts %}
+        <tr>
+            <td>{{ post.id }} </td>
+            <td>{{ post.title }} </td>
+            <td>{{ post.content }} </td>
+            <td>{{ post.author_id }} </td>
+            <td>{{ post.create_date}} </td>
+            <td>{{ post.update_date}} </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+<div class="single">
+    <h2 class="title">{{ ('Submit a post') }}</h2>
+    <form method="POST" action=".">
+        {{ form.hidden_tag() }}
+        <table cellspacing="0" class="post-form">
+        <tbody>
+            <tr>
+                <th>{{ form.title.label(style="display:block;width:100px;") }}</th>
+                <td>{{ form.title(size=50, class="text") }} </td>
+            </tr>
+            <tr>
+                <th>{{ form.content.label }}</th>
+                <td>{{ form.content(style="width:820px;height:400px;") }} </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>{{ form.submit(class="button") }}</td>
+            </tr>
+        </tbody>
+        </table>
+    </form>
+</div>
+</div>
+{%- endblock %}
+{%- block sidebar %}
+<div class="sidebar">
+    {% include "_archive.html" %}
+</div>
+{%- endblock %}

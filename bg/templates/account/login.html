@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% from "macros/_forms.html" import render_errors %}
+
+{%- block content %}
+<div id="main">
+<div class="single">
+  <form action="." method="post" id="login">               
+    {{ form.hidden_tag() }}
+
+    <p>     
+      {{ form.username.label() }}
+      {{ form.username}} 
+      {{ render_errors(form.username) }}
+    </p>
+
+    <p>
+      {{ form.password.label }}
+      {{ form.password() }}
+      {{ render_errors(form.password) }}
+    </p>    
+
+    <p class="no-border">
+      <td>{{ form.submit(class="button") }}</td>
+    </p>
+  </form>                           
+</div>
+</div>
+{%- endblock %}
+
+

@@ -1,0 +1,9 @@
+{% if g.identity.id > 0 %}
+<div id="manage" class="sidebox">
+    <h3> Manage </h3>
+    <ul class="sidemenu">				
+        <li><a href="{{ url_for('post.newpost') }}">Add New Post</a></li>
+    </ul>	
+</div>
+{% endif %}
+

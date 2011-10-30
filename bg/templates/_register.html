@@ -1,0 +1,10 @@
+{% if g.identity.id == 0 %}
+<div id="register" class="sidebox">
+    <ul class="sidemenu">				
+        <li><a href="{{ url_for('account.signup') }}"> Signup </a></li>
+        <li><a href="{{ url_for('account.login') }}"> Login </a></li> 
+    </ul>	
+</div>
+{% endif %}
+
+

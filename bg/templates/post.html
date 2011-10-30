@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{%- block content %}
+<div id="main">
+<h2><a href="#">{{ post.title }}</a></h2>
+
+  <p class="post-info">Posted by <a href="{{url_for('post.post_list', user_id = post.author_id )  }}">{{ post.author_name }}</a> 
+  | Tag: <a href="#"></a>
+  {% if g.isuser %} 
+  <a href="{{ url_for('post.edit', post_id=post.id) }}" class="edit"> > Edit </a> 
+  <a href="{{ url_for('post.delete', post_id=post.id) }}" class="delete"> > Delete </a> 
+  {% endif %}
+  </p>
+  <p>
+    <pre>{{ post.content.replace('\r\n','<br>')|safe }}</pre>
+  </p>
+
+  <p class="post-footer">           
+  <a href="#" class="comments">Comments({{ post.comment_num }})</a> |          
+  <span class="date"> {{ post.create_date|format_date('full') }} </span> 
+  </p>
+
+  <h3 id="comments">{{ post.comment_num }} Responses</h3>
+  {%- for comment in comments %}
+
+  <ol class="commentlist">
+
+    <li class="alt" id="{{ comment.id }}">
+
+    <cite>
+      <img alt="" src="images/gravatar.jpg" class="avatar" height="40" width="40" />                      
+      <a href="#"> {{ comment.email }} </a> Says: <br />                         
+      <span class="comment-data"> {{ comment.create_date|format_date('full') }} </span>
+      <span class="comment-data">
+      {% if g.isadmin %}
+        | <a href="{{ url_for('post.delete_comment', post_id=post.id, comment_id=comment.id) }}"> Delete </a>
+      {% endif %}
+      </span>
+    </cite>
+
+    <div class="comment-text">
+      <p> {{ comment.comment.replace('\r\n','<br>')|safe }}</p>
+    </div>                
+
+  </ol>
+  {%- endfor %}
+
+  <h3 id="respond">Leave a Reply</h3>                               
+
+  <form action="{{ url_for('post.add_comment', post_id=post.id) }}" method="post" id="commentform">         
+    {{ form.hidden_tag() }}
+
+    <p>     
+      {{ form.name.label() }}<br />
+      {{ form.name }}<br />
+    </p>
+
+    <p>
+      {{ form.email.label }}
+      {{ form.email }}
+    </p>
+
+    <p>
+      {{ form.comment.label }}
+      {{ form.comment(cols="20",rows="10")}}
+    </p>    
+
+    <p class="no-border">
+      {{ form.submit(class="button") }}
+    </p>
+
+  </form>                           
+
+</div>
+{%- endblock %}
+{%- block sidebar %}
+<div class="sidebar">
+    {% include "_manage.html" %}
+    {% include "_archive.html" %}
+</div>
+{%- endblock %}
+
+

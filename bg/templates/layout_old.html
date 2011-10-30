@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="all" />
+	<meta name="Author" content="laoqiu.com@gmail.com">
+	<meta name="Keywords" content="blog, python, flask">
+	<meta name="Description" content="flask blog by python">
+    <title> {% block title %}{% endblock %} Team blog </title>    
+</head>
+
+<body>
+<div id="wrap">
+    <div id="header" class="clearfix">
+        <div class="head-inner">
+            <h1>Team blog</h1>
+            <span class="description">An archive of blog for browsing and searching</span>
+            <div id="nav">
+                <ul>
+                    <li><a href="#">{{ ("Home") }}</a></li>
+                    <li><a href="#">{{ ("Archive") }}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="container" class="clearfix">
+        {%- if get_flashed_messages() -%}
+        <div id="flashed">
+            {% for category, msg in get_flashed_messages(with_categories=true) %}
+            <span class="flash-{{ category }}">{{ msg }}</span>
+            {% endfor %}
+        </div>
+        {%- endif -%}
+        {%- block content %}{%- endblock %}
+        {%- block sidebar %}
+        <div class="sidebar">
+            {% include "_archive.html" %}
+        </div>
+        {%- endblock %}
+    </div>
+    <div id="footer" class="clearfix">
+    </div>
+</div>
+<a style="display:none;" rel="nofollow" href="#header" id="go-to-top">▲</a>
+</body>
+</html>

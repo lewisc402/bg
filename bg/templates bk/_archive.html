@@ -1,0 +1,12 @@
+    <div id="archives" class="sidebox">
+        <h3>{{ "Archive" }}</h3>
+        <div class="inner">
+        {% if archives %}
+        <ul>
+        {% for date in archives %}
+        <li><a href="#">{{ date }}</a></li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        </div>
+    </div>

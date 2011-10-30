@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{%- block content %}
+<div id="main">
+ {%- for post in posts %}
+ <h2><a href="{{ url_for('post.view', post_id=post.id) }}" title="">{{ post.title }}</a></h2>
+                                      
+ <p class="post-info">Posted by <a href="{{ url_for('post.post_list', user_id=post.author_id  ) }} "> {{ post.author_name }}</a>
+ | Tag <a href="#"></a>
+ </p>
+                            
+  <p>
+    <pre>{{ post.content.replace('\r\n','<br>')|safe }}</pre>
+  </p>
+                                  
+  <p class="post-footer">		
+  <a href="{{ url_for('post.view', post_id=post.id) }}" class="readmore">Read more</a> |
+  <a href="{{ url_for('post.view', post_id=post.id) }}" class="comments">Comments ({{ post.comment_num }})</a> |
+  <span class="date"> {{ post.create_date|format_date('full') }} </span>
+  
+  </p>
+ {%- endfor %}
+</div>
+{%- endblock %}
+{%- block sidebar %}
+<div class="sidebar">
+    {% include "_manage.html" %}
+    {% include "_register.html" %}
+    {% include "_archive.html" %}
+</div>
+{%- endblock %}
+
+
