@@ -1,1 +1,91 @@
 
+Public outputPath As String
+Sub clearAll()
+    Sheets("BankList").Row("2:65536").Delete
+End Sub
+Sub Run()
+    Call CreateFolder
+    Call CreateList
+    Call SaveEmail
+    Sheets("Menu").Select
+End Sub
+Function CreateList()
+    Dim lr As Long
+    Dim pth As String
+    Dim rw As Long
+    
+    Call CreateFolder
+    Sheets("Menu").Select
+    lr = Cells(Rows.Count, "A").End(xlUp).Row
+    r = 2
+    For i = 2 To lr
+        pth = outputPath & "\" & Cells(i, "B") & ".xlsx"
+        Set c = Sheets("FileText").Range("A:A").Find(Cells(i, "B"))
+        If Not c Is Nothing Then
+            rw = c.Row
+        Else
+            rw = 0
+            pth = ""
+        End If
+        If rw > 0 Then
+            Call CreateExcel(pth, rw)
+            pth = outputPath & "\" & Cells(i, "B") & ".xlsx"
+        End If
+        Sheets("BankList").Cells(r, "A") = Cells(i, "B")
+        'Sheets("BankList").Cells(r, "B") = Cells(i, "B") & "@bank.com"
+        'Sheets("BankList").Cells(r, "C") = "TITLE1"
+        'Sheets("BankList").Cells(r, "D") = "BODY1"
+        Sheets("BankList").Cells(r, "E") = pth
+        r = r + 1
+    Next i
+End Function
+Function SaveEmail()
+    Dim lr As Long
+    Sheets("BankList").Select
+    lr = Cells(Rows.Count, "A").End(xlUp).Row
+    For i = 2 To lr
+        If Trim(Cells(i, "E")) <> "" Then
+            Call CreateEmailDraft(Cells(i, "B"), Cells(i, "C"), Cells(i, "D"), Cells(i, "E"))
+        End If
+    Next i
+End Function
+Sub CreateExcel(pth As String, rw As Long)
+    Dim wb As Workbook
+    Dim r As String
+    Set wb = Workbooks.Add
+    
+    r = ThisWorkbook.Sheets("Menu").Range("I1")
+    ThisWorkbook.Sheets("FileText").Range("A1:BZ" & r).Copy wb.Sheets(1).Range("A1")
+    ThisWorkbook.Sheets("FileText").Rows(rw).Copy wb.Sheets(1).Range("A" & r + 1)
+    On Error Resume Next
+    wb.SaveAs pth
+    wb.Close
+End Sub
+Function CreateFolder()
+    Dim pth As String
+    pth = ThisWorkbook.Path
+    outputPath = pth & "\All banks"
+    If Len(Dir(outputPath, vbDirectory)) = 0 Then
+       MkDir outputPath
+    End If
+End Function
+Function CreateEmailDraft(toEmails As String, subject As String, body As String, attachmentPath As String)
+    Dim outApp As Object
+    Dim outMail As Object
+    Set outApp = CreateObject("Outlook.Application")
+    Set outMail = outApp.CreateItem(0)
+    
+    With outMail
+        .To = toEmails
+        '.CC = ccEmails
+        '.BCC = bccEmails
+        .subject = subject
+        .HTMLBody = body
+        .Attachments.Add attachmentPath
+        '.Send 'Send the email
+        .Save
+    End With
+ 
+    Set outMail = Nothing
+    Set outApp = Nothing
+End Function
